@@ -41,7 +41,7 @@ public class MaterializeSDTypes {
 			e.printStackTrace();
 		}
 		
-		insert = "INSERT INTO dbpedia_untyped_instance SELECT resource FROM stat_resource MINUS (SELECT resource FROM dbpedia_types UNION SELECT resource FROM dbpedia_disambiguations)";
+		insert = "INSERT INTO dbpedia_untyped_instance SELECT resource FROM stat_resource MINUS (SELECT resource FROM dbpedia_types)"; //UNION SELECT resource FROM dbpedia_disambiguations)";
 		try {
 			stmt.execute(insert);
 		} catch (SQLException e) {

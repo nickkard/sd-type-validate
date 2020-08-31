@@ -71,14 +71,14 @@ public class LoadFiles {
 			sqlInsert += "'" + predicate + "',";
 			
 			String object = stk.nextToken();
-			if(object.startsWith("<")) {
-				if(object.startsWith("<http://dbpedia.org/resource/")) {
-					object = object.replace(" .","");
-					object = object.replace("<","");
-					sqlInsert +="'" + object + "')";
-					insert = true;
-				}
-			}
+			//if(object.startsWith("<")) {
+			//	if(object.startsWith("<http://dbpedia.org/resource/")) {
+                        object = object.replace(" .","");
+                        object = object.replace("<","");
+                        sqlInsert +="'" + object + "')";
+                        insert = true;
+			//	}
+			//}
 			if(insert) {
 				try {
 					stmt.addBatch(sqlInsert);

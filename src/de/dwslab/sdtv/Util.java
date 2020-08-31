@@ -54,7 +54,12 @@ public class Util {
 			e.printStackTrace();
 		}
 		
-		String query = "SELECT * FROM " + tableName + " LIMIT 10";
+                String query;
+                if(tableName == "dbpedia_untyped_instance"){
+                    query = "SELECT * FROM " + tableName;
+                }else{
+                    query = "SELECT * FROM " + tableName + " LIMIT 10";
+                }
 		try {
 			ResultSet RS = stmt.executeQuery(query);
 			while(RS.next()) {
