@@ -1,0 +1,24 @@
+------------------------------------
+		README by nickkard
+------------------------------------
+
+This is a forked repo of Heiko Paulheim's SDType, available at https://github.com/HeikoPaulheim/sd-type-validate
+
+This repo contains the modifications made by nickkard in order to:
+
+1) 	run Heiko's code
+2)	evaluate the approach and compare to LSDisc
+
+
+Modifications:
+-------------
+
+1)	Extra files were added to 'wordnet' folder in order to run successfully
+2)	Classes 'Runner.java' and 'Util.java' were modified to perform a number of iterations of the overall approach. 
+
+
+How to run:
+----------
+
+Netbeans -> New Project -> Java Project with Existing Sources -> Add 'src' and 'wordnet' folders in box "Source Package Folders" 
+-> Finish -> Manually add libraries from 'lib' folder inside "Libraries"
