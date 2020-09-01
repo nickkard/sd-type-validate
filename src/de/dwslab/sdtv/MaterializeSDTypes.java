@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
@@ -19,7 +20,7 @@ import net.didion.jwnl.dictionary.Dictionary;
 public class MaterializeSDTypes {
 	private int chunkSize = 1000;
 	
-	public void computeSDTypes() {
+	public void computeSDTypes(List<String> untyped_instances) {
 		System.out.println("Computing SDTypes");
 		Connection conn = ConnectionManager.getConnection();
 		Statement stmt = null;
@@ -41,13 +42,24 @@ public class MaterializeSDTypes {
 			e.printStackTrace();
 		}
 		
-		insert = "INSERT INTO dbpedia_untyped_instance SELECT resource FROM stat_resource MINUS (SELECT resource FROM dbpedia_types)"; //UNION SELECT resource FROM dbpedia_disambiguations)";
+		/**insert = "INSERT INTO dbpedia_untyped_instance SELECT resource FROM stat_resource MINUS (SELECT resource FROM dbpedia_types)"; //UNION SELECT resource FROM dbpedia_disambiguations)";
 		try {
 			stmt.execute(insert);
 		} catch (SQLException e) {
 			System.out.println("Error inserting into untyped instance table");
 			e.printStackTrace();
-		}
+		}**/
+                for(int i=0; i<untyped_instances.size(); i++){
+                    String sqlInsert = "INSERT INTO dbpedia_untyped_instance VALUES(";
+                    sqlInsert +="'" + untyped_instances.get(i) + "')";
+                    try {
+                            stmt.execute(sqlInsert);
+                    } catch (SQLException e) {
+                            System.out.println("Error inserting into global resource count table");
+                            e.printStackTrace();
+                    }
+                }
+                
 		Util.createIndex("dbpedia_untyped_instance", "resource");
 		Util.checkTable("dbpedia_untyped_instance");
 		
@@ -91,10 +103,14 @@ public class MaterializeSDTypes {
 		}
 		
 		String query = "SELECT resource FROM dbpedia_untyped_instance";
+                int count = 0;
 		try {
 			ResultSet RS = stmt.executeQuery(query);
 			while(RS.next()) {
 				String resource = RS.getString(1);
+                                System.out.println(count);
+                                System.out.println(resource);
+                                count++;
 				try {
 					if(testCommonNoun(resource)) {
 //						System.out.println("Skipping " + resource + " after WordNet test");

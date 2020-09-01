@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -114,6 +116,44 @@ public class LoadFiles {
 		Util.checkTable("dbpedia_properties");
 	}
 	
+        
+        public List<String> loadUntypedInstances(String filename) throws IOException {
+            System.out.println("Untyped instances: load started");
+            Connection conn = ConnectionManager.getConnection();
+            Statement stmt = null;
+            BufferedReader BR = new BufferedReader(new FileReader(filename));
+            int count = 0;
+            
+            List<String> untyped_instances = new ArrayList<String>(); 
+            
+            try {
+                    stmt = conn.createStatement();
+            } catch (SQLException e) {
+                    System.out.println("Error preparing insert");
+                    e.printStackTrace();
+            }
+            while(BR.ready()) {
+                count ++;
+                String line = BR.readLine();
+                if(line.startsWith("#"))
+                        continue;
+                String subject;
+                subject = line.replace("'","''");
+                subject = subject.replace("<","");
+                subject = subject.replace(">","");
+                
+                untyped_instances.add(subject);   
+            }
+            
+            BR.close();
+            System.out.println("Property assertions: load finished. Loaded " + count + " statements.");
+            System.out.println("The size of the list is : " + untyped_instances.size());
+            
+            return untyped_instances;
+        }
+        
+             
+        
 
 	/**
 	 * Runtime: ~20 minutes
