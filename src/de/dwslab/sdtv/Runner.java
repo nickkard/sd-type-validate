@@ -9,15 +9,16 @@ import java.util.List;
  * @author Heiko
  */
 public class Runner {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
             
             int i = 0;
             
-            int iterations = 20;
+            int iterations = 1;
             //String dataset = "BNF_subset";
-            String dataset = "kenza_conference";
+            //String dataset = "kenza_conference";
             //String dataset = "DBpedia_subset";
             //String dataset = "histmunic";
+            String dataset = "clean_lubm";
             
             for(i=0; i<iterations; i++){
                     LoadFiles loadFiles = new LoadFiles();
@@ -26,10 +27,13 @@ public class Runner {
                     MaterializeSDValidate materializeSDValidate = new MaterializeSDValidate();
                     try {
                             List<String> untyped_instances = new ArrayList<String>();
-                            untyped_instances = loadFiles.loadUntypedInstances("/home/nickkard/schemadiscovery/LSH/output/" + dataset + "/" + dataset + "_untyped_instances_" + i + ".txt");
-                            loadFiles.loadProperties("/home/nickkard/schemadiscovery/LSH/output/" + dataset + "/" + dataset + "_properties_" + i + ".txt");
+                            //untyped_instances = loadFiles.loadUntypedInstances("/home/nickkard/schemadiscovery/LSH/output/" + dataset + "/" + dataset + "_untyped_instances_" + i + ".txt");
+                            //loadFiles.loadProperties("/home/nickkard/schemadiscovery/LSH/output/" + dataset + "/" + dataset + "_properties_" + i + ".txt");
+                            untyped_instances = loadFiles.loadUntypedInstances("/home/nickkard/schemadiscovery/LSH/Datasets/" + dataset + "/" + dataset + "_untyped_instances_" + i + ".txt");
+                            loadFiles.loadProperties("/home/nickkard/schemadiscovery/LSH/Datasets/" + dataset + "/" + dataset + "_properties_" + i + ".txt");
                             loadFiles.createPropertyIndices();
-                            loadFiles.loadTypes("/home/nickkard/schemadiscovery/LSH/output/" + dataset + "/" + dataset + "_types_" + i + ".txt");
+                            //loadFiles.loadTypes("/home/nickkard/schemadiscovery/LSH/output/" + dataset + "/" + dataset + "_types_" + i + ".txt");
+                            loadFiles.loadTypes("/home/nickkard/schemadiscovery/LSH/Datasets/" + dataset + "/" + dataset + "_types_" + i + ".txt");
                             loadFiles.createTypeIndices();
                             //loadFiles.loadDisambiguations("./enwiki-20151002-disambiguations-unredirected.ttl");
                             //loadFiles.createDisambiguationIndices();
@@ -46,5 +50,5 @@ public class Runner {
                             e.printStackTrace();
                     }
             }
-	}
+    }
 }

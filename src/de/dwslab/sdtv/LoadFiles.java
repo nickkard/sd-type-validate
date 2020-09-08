@@ -212,7 +212,7 @@ public class LoadFiles {
 			sqlInsert += "'" + subject + "',";
 
 			// the predicate is only rdf.type, so ignore
-			String predicate = stk.nextToken();
+			//String predicate = stk.nextToken();
 			
 			String object = stk.nextToken();
 			object = object.replace(" .","");
