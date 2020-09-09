@@ -60,9 +60,11 @@ public class LoadFiles {
 			boolean insert = false;
 			String sqlInsert = "INSERT INTO dbpedia_properties VALUES(";
 			String line = BR.readLine();
+                        
 			if(line.startsWith("#"))
 				continue;
 			line=line.replace("'","''");
+                        
 			StringTokenizer stk = new StringTokenizer(line,"> ",false);
 			String subject = stk.nextToken();
 			subject = subject.replace("<","");
@@ -208,14 +210,17 @@ public class LoadFiles {
 			line=line.replace("'","''");
 			StringTokenizer stk = new StringTokenizer(line,"> ",false);
 			String subject = stk.nextToken();
+                        System.out.println(subject);
 			subject = subject.replace("<","");
 			sqlInsert += "'" + subject + "',";
 
 			// the predicate is only rdf.type, so ignore
-			//String predicate = stk.nextToken();
+			String predicate = stk.nextToken();
+                        System.out.println(predicate);
 			
 			String object = stk.nextToken();
-			object = object.replace(" .","");
+                        System.out.println(object);
+                        object = object.replace(" .","");
 			object = object.replace("<","");
 			sqlInsert +="'" + object + "')";
 			try {
